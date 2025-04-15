@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -66,4 +68,38 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+body {
+  font-family: "Nunito", sans-serif;
+}
+
+/* Fix lists inside TipTap editor */
+.tiptap ul {
+  list-style-type: disc; /* Bullets */
+  padding-left: 20px;
+}
+
+.tiptap ol {
+  list-style-type: decimal; /* Numbers */
+  padding-left: 20px;
+}
+
+.tiptap li {
+  margin-bottom: 4px;
+}
+
+/* Fix lists in the HTML preview */
+.html-preview ul {
+  list-style-type: disc; /* Bullets */
+  padding-left: 20px;
+}
+
+.html-preview ol {
+  list-style-type: decimal; /* Numbers */
+  padding-left: 20px;
+}
+
+.html-preview li {
+  margin-bottom: 4px;
 }

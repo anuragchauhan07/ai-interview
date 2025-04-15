@@ -1,37 +1,53 @@
-import { forgotPasswordAction } from "@/app/actions";
-import { FormMessage, Message } from "@/components/form-message";
-import { SubmitButton } from "@/components/submit-button";
+import { resetPasswordAction } from "@/app/actions";
+import { FormMessage, Message } from "@/components/auth/AuthFormMessage";
+import { SubmitButton } from "@/components/auth/AuthSubmitButton";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { SmtpMessage } from "../smtp-message";
+import AuthHeader from "@/components/auth/AuthHeader";
 
-export default async function ForgotPassword(props: {
-  searchParams: Promise<Message>;
-}) {
+export default async function ForgotPassword(props: { searchParams: Promise<Message> }) {
   const searchParams = await props.searchParams;
+
   return (
-    <>
-      <form className="flex-1 flex flex-col w-full gap-2 text-foreground [&>input]:mb-6 min-w-64 max-w-64 mx-auto">
-        <div>
-          <h1 className="text-2xl font-medium">Reset Password</h1>
-          <p className="text-sm text-secondary-foreground">
-            Already have an account?{" "}
-            <Link className="text-primary underline" href="/sign-in">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-white">
+      <div className="w-full max-w-[400px] space-y-6">
+        <AuthHeader
+          title="Reset your password"
+          subtitle="Design better and spend less time without restricting creative freedom"
+        />
+
+        {/* Reset Password Form */}
+        <form className="space-y-4">
+          <div className="space-y-2">
+            <Input
+              name="email"
+              type="email"
+              placeholder="Enter your email"
+              required
+              className="w-full px-4 py-2 border rounded-lg"
+            />
+          </div>
+
+          <SubmitButton 
+            pendingText="Sending reset link..." 
+            formAction={resetPasswordAction}
+            className="w-full bg-black text-white rounded-lg py-2 font-medium hover:bg-gray-800 transition-colors"
+          >
+            Send reset link
+          </SubmitButton>
+        </form>
+
+        {/* Footer Links */}
+        <div className="text-center space-y-3">
+          <div className="text-sm text-gray-600">
+            Remember your password?{" "}
+            <Link href="/sign-in" className="text-black hover:underline">
               Sign in
             </Link>
-          </p>
-        </div>
-        <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
-          <Label htmlFor="email">Email</Label>
-          <Input name="email" placeholder="you@example.com" required />
-          <SubmitButton formAction={forgotPasswordAction}>
-            Reset Password
-          </SubmitButton>
+          </div>
           <FormMessage message={searchParams} />
         </div>
-      </form>
-      <SmtpMessage />
-    </>
+      </div>
+    </div>
   );
 }
